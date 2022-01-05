@@ -11,7 +11,7 @@
 
 # Features
 - [x] Hardware and Robot configuration API
-- [x] Movement APIs based on distance (inches) rather than velocity and "ticks"
+- [x] Movement API based on distance (inches) rather than velocity and "ticks"
 
 # Downloading and Usage
 `tank` is currently under development, and is not ready for public use. Check back later!
