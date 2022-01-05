@@ -17,4 +17,5 @@
 `tank` is currently under development, and is not ready for public use. Check back later!
 
 # Copyright &copy; 2022 Aarush Gupta
-This code is copyrighted but licensed to the public under the GNU AGPLv3 license and any later versions.
+The code under `Tank/` is copyrighted but licensed to the public under the GNU AGPLv3 license and any later versions.
+Any other code is under the copyright of it's respective owners.
