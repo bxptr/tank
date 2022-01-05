@@ -14,21 +14,6 @@ public class Tank {
 
     public Tank(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap; // when user class extends LinearOpMode
-        initializeMotors();
-    }
-
-    private void initializeMotors() {
-        for (DcMotor motor : hardware.left) {
-            motor.setDirection(DcMotor.Direction.FORWARD);
-            motor.setPower(0);
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-        for (DcMotor motor : hardware.right) {
-            motor.setDirection(DcMotor.Direction.REVERSE);
-            motor.setPower(0);
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
+        this.hardware.initializeMotors();
     }
 }

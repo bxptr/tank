@@ -19,15 +19,40 @@ public class Movement {
             seconds = inches / 33;
         }
         double ticks = inches * this.ticksPerInch;
-        for (DcMotor motor : hardware.left) {
+        for (DcMotor motor : this.hardware.left) {
             motor.setVelocity((int)(ticks * -1));
         }
-        for (DcMotor motor : hardware.right) {
+        for (DcMotor motor : this.hardware.right) {
             motor.setVelocity((int)(ticks * -1));
         }
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < seconds)) {}
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setPower(0);
+        for (DcMotor motor : this.hardware.left) {
+            motor.setVelocity(0);
+        }
+        for (DcMotor motor : this.hardware.right) {
+            motor.setVelocity(0);
+        }
+        sleep(this.wait);
+    }
+
+    public void turn(double degrees) {
+        double ticks = ((this.hardware.botWidth * Math.PI) * (degrees / 360)) * this.ticksPerInch;
+        if (degrees > 0) {
+            robot.leftDrive.setVelocity((int)Math.abs(ticks));
+            robot.rightDrive.setVelocity(-1 * (int)Math.abs(ticks));
+        } else {
+            robot.leftDrive.setVelocity(-1 * (int)Math.abs(ticks));
+            robot.rightDrive.setVelocity((int)Math.abs(ticks));
+        }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
+        for (DcMotor motor : this.hardware.left) {
+            motor.setVelocity(0);
+        }
+        for (DcMotor motor : this.hardware.right) {
+            motor.setVelocity(0);
+        }
+        sleep(this.wait);
     }
 }
