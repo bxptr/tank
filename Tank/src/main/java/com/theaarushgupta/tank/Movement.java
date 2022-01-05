@@ -12,6 +12,12 @@ public class Movement {
     }
 
     public void drive(double inches) {
+        double seconds;
+        if (inches <= 33) {
+            seconds = 1.0;
+        } else {
+            seconds = inches / 33;
+        }
         double ticks = inches * this.ticksPerInch;
         for (DcMotor motor : hardware.left) {
             motor.setVelocity((int)(ticks * -1));
@@ -20,12 +26,6 @@ public class Movement {
             motor.setVelocity((int)(ticks * -1));
         }
         runtime.reset();
-        double seconds;
-        if (inches <= 33) {
-            seconds = 1.0;
-        } else {
-            seconds = inches / 33;
-        }
         while (opModeIsActive() && (runtime.seconds() < seconds)) {}
         robot.leftDrive.setPower(0);
         robot.rightDrive.setPower(0);
