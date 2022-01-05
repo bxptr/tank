@@ -1,127 +1,38 @@
-/* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted (subject to the limitations in the disclaimer below) provided that
-the following conditions are met:
-
-Redistributions of source code must retain the above copyright notice, this list
-of conditions and the following disclaimer.
-
-Redistributions in binary form must reproduce the above copyright notice, this
-list of conditions and the following disclaimer in the documentation and/or
-other materials provided with the distribution.
-
-Neither the name of Qualcomm Technologies Inc nor the names of its contributors
-may be used to endorse or promote products derived from this software without
-specific prior written permission.
-
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
-LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
 package org.firstinspires.ftc.robotcontroller.internal;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
+import android.app.*;
+import android.content.*;
+import android.hardware.usb.*;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
-import android.os.IBinder;
+import android.os.*;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.webkit.WebView;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.PopupMenu;
-import android.widget.TextView;
+import androidx.annotation.*;
+import android.view.*;
+import android.webkit.*;
+import android.widget.LinearLayout.*;
+import android.widget.*;
 
 import com.google.blocks.ftcrobotcontroller.ProgrammingWebHandlers;
 import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
-import com.qualcomm.ftccommon.ClassManagerFactory;
-import com.qualcomm.ftccommon.FtcAboutActivity;
-import com.qualcomm.ftccommon.FtcEventLoop;
-import com.qualcomm.ftccommon.FtcEventLoopIdle;
-import com.qualcomm.ftccommon.FtcRobotControllerService;
-import com.qualcomm.ftccommon.FtcRobotControllerService.FtcRobotControllerBinder;
-import com.qualcomm.ftccommon.FtcRobotControllerSettingsActivity;
-import com.qualcomm.ftccommon.LaunchActivityConstantsList;
-import com.qualcomm.ftccommon.LaunchActivityConstantsList.RequestCode;
-import com.qualcomm.ftccommon.Restarter;
-import com.qualcomm.ftccommon.UpdateUI;
-import com.qualcomm.ftccommon.configuration.EditParameters;
-import com.qualcomm.ftccommon.configuration.FtcLoadFileActivity;
-import com.qualcomm.ftccommon.configuration.RobotConfigFile;
-import com.qualcomm.ftccommon.configuration.RobotConfigFileManager;
-import com.qualcomm.ftcrobotcontroller.BuildConfig;
-import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.ftccommon.*;
+import com.qualcomm.ftccommon.configuration.*;
+import com.qualcomm.ftcrobotcontroller.*;
 import com.qualcomm.hardware.HardwareFactory;
-import com.qualcomm.robotcore.eventloop.EventLoopManager;
-import com.qualcomm.robotcore.eventloop.opmode.FtcRobotControllerServiceState;
-import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
-import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
-import com.qualcomm.robotcore.hardware.configuration.Utility;
-import com.qualcomm.robotcore.robot.Robot;
-import com.qualcomm.robotcore.robot.RobotState;
-import com.qualcomm.robotcore.util.ClockWarningSource;
-import com.qualcomm.robotcore.util.Device;
-import com.qualcomm.robotcore.util.Dimmer;
-import com.qualcomm.robotcore.util.ImmersiveMode;
-import com.qualcomm.robotcore.util.RobotLog;
-import com.qualcomm.robotcore.util.WebServer;
-import com.qualcomm.robotcore.wifi.NetworkConnection;
-import com.qualcomm.robotcore.wifi.NetworkConnectionFactory;
-import com.qualcomm.robotcore.wifi.NetworkType;
+import com.qualcomm.robotcore.eventloop.*;
+import com.qualcomm.robotcore.eventloop.opmode.*;
+import com.qualcomm.robotcore.hardware.configuration.*;
+import com.qualcomm.robotcore.robot.*;
+import com.qualcomm.robotcore.util.*;
 
 import org.firstinspires.ftc.ftccommon.external.SoundPlayingRobotMonitor;
-import org.firstinspires.ftc.ftccommon.internal.AnnotatedHooksClassFilter;
-import org.firstinspires.ftc.ftccommon.internal.FtcRobotControllerWatchdogService;
-import org.firstinspires.ftc.ftccommon.internal.ProgramAndManageActivity;
-import org.firstinspires.ftc.onbotjava.ExternalLibraries;
-import org.firstinspires.ftc.onbotjava.OnBotJavaHelperImpl;
-import org.firstinspires.ftc.onbotjava.OnBotJavaProgrammingMode;
+import org.firstinspires.ftc.ftccommon.internal.*;
+import org.firstinspires.ftc.onbotjava.*;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.robotcore.internal.hardware.android.AndroidBoard;
-import org.firstinspires.ftc.robotcore.internal.network.DeviceNameManagerFactory;
-import org.firstinspires.ftc.robotcore.internal.network.PreferenceRemoterRC;
-import org.firstinspires.ftc.robotcore.internal.network.StartResult;
-import org.firstinspires.ftc.robotcore.internal.network.WifiDirectChannelChanger;
-import org.firstinspires.ftc.robotcore.internal.network.WifiMuteEvent;
-import org.firstinspires.ftc.robotcore.internal.network.WifiMuteStateMachine;
-import org.firstinspires.ftc.robotcore.internal.opmode.ClassManager;
-import org.firstinspires.ftc.robotcore.internal.opmode.OnBotJavaHelper;
-import org.firstinspires.ftc.robotcore.internal.system.AppAliveNotifier;
-import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
-import org.firstinspires.ftc.robotcore.internal.system.Assert;
-import org.firstinspires.ftc.robotcore.internal.system.PreferencesHelper;
-import org.firstinspires.ftc.robotcore.internal.system.ServiceController;
-import org.firstinspires.ftc.robotcore.internal.ui.ThemedActivity;
-import org.firstinspires.ftc.robotcore.internal.ui.UILocation;
+import org.firstinspires.ftc.robotcore.internal.network.*;
+import org.firstinspires.ftc.robotcore.internal.opmode.*;
+import org.firstinspires.ftc.robotcore.internal.system.*;
+import org.firstinspires.ftc.robotcore.internal.ui.*;
 import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo;
 import org.firstinspires.ftc.robotserver.internal.programmingmode.ProgrammingModeManager;
 import org.firstinspires.inspection.RcInspectionActivity;
@@ -129,8 +40,7 @@ import org.threeten.bp.YearMonth;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @SuppressWarnings("WeakerAccess")
