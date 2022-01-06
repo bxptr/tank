@@ -20,18 +20,18 @@ public class Movement {
             seconds = inches / 33;
         }
         double ticks = inches * this.ticksPerInch;
-        for (DcMotor motor : this.hardware.left) {
+        for (DcMotor motor : this.hardware.left.values()) {
             motor.setVelocity((int)(ticks * -1));
         }
-        for (DcMotor motor : this.hardware.right) {
+        for (DcMotor motor : this.hardware.right.values()) {
             motor.setVelocity((int)(ticks * -1));
         }
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < seconds)) {}
-        for (DcMotor motor : this.hardware.left) {
+        for (DcMotor motor : this.hardware.left.values()) {
             motor.setVelocity(0);
         }
-        for (DcMotor motor : this.hardware.right) {
+        for (DcMotor motor : this.hardware.right.values()) {
             motor.setVelocity(0);
         }
         sleep(this.wait);
@@ -48,10 +48,10 @@ public class Movement {
         }
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
-        for (DcMotor motor : this.hardware.left) {
+        for (DcMotor motor : this.hardware.left.values()) {
             motor.setVelocity(0);
         }
-        for (DcMotor motor : this.hardware.right) {
+        for (DcMotor motor : this.hardware.right.values()) {
             motor.setVelocity(0);
         }
         sleep(this.wait);
