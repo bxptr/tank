@@ -14,6 +14,9 @@ public class Tank {
 
     public Tank(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap; // when user class extends LinearOpMode
+    }
+
+    public void start() {
         this.hardware.initializeMotors();
     }
 }
