@@ -2,7 +2,7 @@
     <img alt = "license" src = "https://img.shields.io/badge/License-AGPLv3-green.svg">
 </p>
 
-<h1 align = "center">Tank <code>beta</code></h1>
+<h1 align = "center">Tank <code>v0.0.1</code></h1>
 <h3 align = "center">a beginner-friendly, fast, and efficient FTC robot framework</h3>
 
 # Overview
