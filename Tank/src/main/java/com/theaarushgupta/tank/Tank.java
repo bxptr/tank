@@ -17,6 +17,6 @@ public class Tank {
     }
 
     public void start() {
-        this.hardware.initializeMotors();
+        this.hardware.initializeAll();
     }
 }

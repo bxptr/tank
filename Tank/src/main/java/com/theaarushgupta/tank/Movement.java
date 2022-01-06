@@ -1,6 +1,7 @@
 package com.theaarushgupta.tank;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Movement {
     private Hardware hardware;
@@ -54,5 +55,19 @@ public class Movement {
             motor.setVelocity(0);
         }
         sleep(this.wait);
+    }
+
+    public void moveServo(String name, double degrees) {
+        Servo servo = hardware.servo.get(name);
+        if (degrees <= 180) {
+            servo.setPosition(Math.abs(degrees / 180));
+        } else {
+            int rotations = Math.floor(degrees / 180);
+            double remaining = (degrees % 180) / 180;
+            for (int index = 0; index < rotations + 1; index++) {
+                servo.setPosition(1);
+            }
+            servo.setPosition(remaining);
+        }
     }
 }
