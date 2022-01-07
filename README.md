@@ -22,8 +22,7 @@ Initialize the robot with `tank` and moving it in a square:
 
 ```java
 /*
-assumes:
-    note: one can configure in the code
+assumes (one can configure these values in the variables below):
     - filename: "TankIsKool.java"
     - left drive motor: "leftDrive"
     - right drive motor: "rightDrive"
