@@ -12,7 +12,7 @@ public class Movement {
         this.hardware = hardware;
     }
 
-    public void drive(double inches) {
+    public void forward(double inches) {
         double seconds;
         if (inches <= 33) {
             seconds = 1.0;
@@ -37,15 +37,29 @@ public class Movement {
         sleep(this.wait);
     }
 
-    public void turn(double degrees) {
+    public void backward(double inches) {
+        this.forward(inches * -1);
+    }
+
+    public void right(double degrees) {
         double ticks = ((this.hardware.botWidth * Math.PI) * (degrees / 360)) * this.ticksPerInch;
-        if (degrees > 0) {
-            robot.leftDrive.setVelocity((int)Math.abs(ticks));
-            robot.rightDrive.setVelocity(-1 * (int)Math.abs(ticks));
-        } else {
-            robot.leftDrive.setVelocity(-1 * (int)Math.abs(ticks));
-            robot.rightDrive.setVelocity((int)Math.abs(ticks));
+        robot.leftDrive.setVelocity((int)Math.abs(ticks));
+        robot.rightDrive.setVelocity(-1 * (int)Math.abs(ticks));
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
+        for (DcMotor motor : this.hardware.left.values()) {
+            motor.setVelocity(0);
         }
+        for (DcMotor motor : this.hardware.right.values()) {
+            motor.setVelocity(0);
+        }
+        sleep(this.wait);
+    }
+
+    public void left(double degrees) {
+        double ticks = ((this.hardware.botWidth * Math.PI) * (degrees / 360)) * this.ticksPerInch;
+        robot.leftDrive.setVelocity(-1 * (int)Math.abs(ticks));
+        robot.rightDrive.setVelocity((int)Math.abs(ticks));
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
         for (DcMotor motor : this.hardware.left.values()) {
