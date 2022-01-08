@@ -49,6 +49,11 @@ public class Hardware {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+        for (DcMotor motor : this.regular) {
+            motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
         for (Servo servo : this.servo) {
             servo.setDirection(DcMotor.Direction.REVERSE);
             servo.setPosition(0);
