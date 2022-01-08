@@ -12,6 +12,36 @@ public class Movement {
         this.hardware = hardware;
     }
 
+    public void moveMotor(String name, double inches) {
+        DcMotor motor = hardware.regular.get(name);
+        double seconds;
+        if (inches <= 33) {
+            seconds = 1.0;
+        } else {
+            seconds = inches / 33;
+        }
+        double ticks = inches * this.ticksPerInch;
+        motor.setVelocity((int)(ticks * -1));
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < seconds)) {}
+        motor.setVelocity(0);
+        sleep(this.wait);
+    }
+
+    public void moveServo(String name, double degrees) {
+        Servo servo = hardware.servo.get(name);
+        if (degrees <= 180) {
+            servo.setPosition(Math.abs(degrees / 180));
+        } else {
+            int rotations = Math.floor(degrees / 180);
+            double remaining = (degrees % 180) / 180;
+            for (int index = 0; index < rotations + 1; index++) {
+                servo.setPosition(1);
+            }
+            servo.setPosition(remaining);
+        }
+    }
+
     public void forward(double inches) {
         double seconds;
         if (inches <= 33) {
@@ -69,19 +99,5 @@ public class Movement {
             motor.setVelocity(0);
         }
         sleep(this.wait);
-    }
-
-    public void moveServo(String name, double degrees) {
-        Servo servo = hardware.servo.get(name);
-        if (degrees <= 180) {
-            servo.setPosition(Math.abs(degrees / 180));
-        } else {
-            int rotations = Math.floor(degrees / 180);
-            double remaining = (degrees % 180) / 180;
-            for (int index = 0; index < rotations + 1; index++) {
-                servo.setPosition(1);
-            }
-            servo.setPosition(remaining);
-        }
     }
 }

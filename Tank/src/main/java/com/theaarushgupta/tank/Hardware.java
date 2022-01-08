@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Hardware {
     public HashMap<String, DcMotor> left = new HashMap<String, DcMotor>();
     public HashMap<String, DcMotor> right = new HashMap<String, DcMotor>();
+    public HashMap<String, DcMotor> regular = new HashMap<String, DcMotor>();
     public HashMap<String, Servo> servo = new HashMap<String, Servo>();
 
     public double countsPerRotation, gearRatio, wheelDiameter;
@@ -25,6 +26,10 @@ public class Hardware {
 
     public void addRightMotor(String name) {
         right.put(name, this.hardwareMap.get(DcMotor.class, name));
+    }
+
+    public void addMotor(String name) {
+        regular.put(name, this.hardwareMap.get(DcMotor.class, name));
     }
 
     public void addServo(String name) {
